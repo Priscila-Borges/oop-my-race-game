@@ -1,3 +1,33 @@
 body {
-    background-color: blue;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+#board {
+    height: 500px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 0px;
+    margin-left: 0px;
+    position: relative;
+    background-image: url("./Image/Marathon_Background.jpg");
+}
+
+#player {
+   position: absolute;
+   background-color: rgb(241, 12, 12);
+}
+
+.obstacle {
+ position: absolute;
+ background-color: blueviolet;
+}
+
+#gameover {
+    background-color: black;
+    color: aliceblue;
+    font-size: x-large;
+    text-align: center;
+    
 }

@@ -11,20 +11,19 @@ class Game {
 
         // create obstacles
         setInterval(() => {
-            
+            //const result = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
             const newObstacle = new Obstacle();
             this.obstaclesArr.push(newObstacle);
-        }, 5000);
-
+        }, 2000);
+    
         // move obstacles
-        setInterval(() => {
-            //const result = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
+        setInterval(() => {           
             this.obstaclesArr.forEach((obstacleInstance) => {                
                 obstacleInstance.moveLeft();                
                 this.removeObstacleIfOutside(obstacleInstance); //remove if outside                 
                 this.detectCollision(obstacleInstance); //Detects Collision               
             });     
-        }, 200);
+        }, 15);
     }
 
     attachEventListeners() {
@@ -55,7 +54,7 @@ class Game {
         ) {
 
             // Directs to gameover page
-            location.href = "./gameover.html"
+           location.href = "./gameover.html"
 
         }
     }
@@ -63,15 +62,15 @@ class Game {
 
 class Player {
     constructor() {
-        this.height = 20
-        this.width = 5;
-        this.positionX = 5;
-        this.positionY = 10;
+        this.height = 200
+        this.width = 150;
+        this.positionX = 5; 
+        this.positionY = 90;
         this.newPlayer = null;
         this.isJumping = false;
         this.upTime;
         this.downTime;
-        this.gravity = 0.09
+        this.gravity = 0.9
 
         this.createDomElement();
 
@@ -81,10 +80,10 @@ class Player {
         this.newPlayer = document.createElement("div");
 
         this.newPlayer.id = "player"
-        this.newPlayer.style.width = this.width + "vw"
-        this.newPlayer.style.height = this.height + "vh"
-        this.newPlayer.style.left = this.positionX + "vw";
-        this.newPlayer.style.bottom = this.positionY + "vh";
+        this.newPlayer.style.width = this.width + "px"
+        this.newPlayer.style.height = this.height + "px"
+        this.newPlayer.style.left = this.positionX + "px";
+        this.newPlayer.style.bottom = this.positionY + "px";
 
         const parentElement = document.getElementById("board");
         parentElement.appendChild(this.newPlayer);
@@ -95,19 +94,20 @@ class Player {
         if (this.isJumping) return;
 
         this.upTime = setInterval(() => {
-            if (this.positionY >= 100) {
+            if (this.positionY >= 230) {
                 clearInterval(this.upTime);
                 this.downTime = setInterval(() => {
-                    if (this.positionY = + 10) {
+                    if (this.positionY < 90) {
                         clearInterval(this.downTime);
                         this.isJumping = false;
                     }
-                    this.positionY = 10;
-                    this.newPlayer.style.bottom = this.positionY + "vh";
-                }, 100)
+                    this.positionY -= 20;
+                    this.newPlayer.style.bottom = this.positionY + "px";
+                }, 130)
             }
-            this.positionY += 10;
-            this.newPlayer.style.bottom = this.positionY + "vh";
+            this.positionY += 30;
+            this.positionY = this.positionY * this.gravity;
+            this.newPlayer.style.bottom = this.positionY + "px";
             this.isJumping = true;
         }, 20)
 
@@ -116,10 +116,10 @@ class Player {
 
 class Obstacle {
     constructor() {
-        this.height = 10
-        this.width = 1;
-        this.positionX = 100;
-        this.positionY = 10;
+        this.height = 90 
+        this.width = 10;
+        this.positionX = 1000;
+        this.positionY = 80;
         this.newObstacle = null
         
         this.createDomElement();
@@ -130,19 +130,19 @@ class Obstacle {
         this.newObstacle = document.createElement("div")
 
         this.newObstacle.className = "obstacle";
-        this.newObstacle.style.width = this.width + "vw"
-        this.newObstacle.style.height = this.height + "vh"
-        this.newObstacle.style.left = this.positionX + "vw";
-        this.newObstacle.style.bottom = this.positionY + "vh";
+        this.newObstacle.style.width = this.width + "px"
+        this.newObstacle.style.height = this.height + "px"
+        this.newObstacle.style.left = this.positionX + "px";
+        this.newObstacle.style.bottom = this.positionY + "px";
 
         const parentElement = document.getElementById("board");
         parentElement.appendChild(this.newObstacle);
 
-    };
+    };    
 
     moveLeft() {
-        this.positionX -= 2;
-        this.newObstacle.style.left = this.positionX + "vw"
+        this.positionX -= 7;
+        this.newObstacle.style.left = this.positionX + "px"
 
     };
 

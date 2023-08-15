@@ -11,7 +11,14 @@ body {
     margin-right: 0px;
     margin-left: 0px;
     position: relative;
+    overflow: hidden;
     background-image: url("./Image/Marathon_Background.jpg");
+    animation: animate-background linear 3s infinite;
+}
+
+@keyframes animate-background {
+    from { background-position: 0px; }
+    to { background-position: -300px;}
 }
 
 #player {

@@ -1,3 +1,66 @@
+class Game {
+    constructor() {
+        this.player = new Player();
+        this.obstaclesArr = []; // store instances of the class Obstacle
+        this.points = 0; //will be implemented later
+    }
+
+    start() {
+        // attach event listeners
+        this.attachEventListeners();
+
+        // create obstacles
+        setInterval(() => {
+            
+            const newObstacle = new Obstacle();
+            this.obstaclesArr.push(newObstacle);
+        }, 5000);
+
+        // move obstacles
+        setInterval(() => {
+            //const result = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
+            this.obstaclesArr.forEach((obstacleInstance) => {                
+                obstacleInstance.moveLeft();                
+                this.removeObstacleIfOutside(obstacleInstance); //remove if outside                 
+                this.detectCollision(obstacleInstance); //Detects Collision               
+            });     
+        }, 200);
+    }
+
+    attachEventListeners() {
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space") {
+                this.player.jump();
+            }
+        });
+    }
+
+    removeObstacleIfOutside(obstacleInstance){
+        
+        if (obstacleInstance.positionX < 0 - obstacleInstance.width) {
+            obstacleInstance.newObstacle.remove();
+            this.obstaclesArr.shift();
+            this.points++
+        }
+    }
+
+    detectCollision(obstacleInstance){
+        
+        if (
+            this.player.positionX < obstacleInstance.positionX + obstacleInstance.width &&
+            this.player.positionX + this.player.width > obstacleInstance.positionX &&
+            this.player.positionY < obstacleInstance.positionY + obstacleInstance.height &&
+            this.player.positionY + this.player.height > obstacleInstance.positionY
+        ) {
+
+            // Directs to gameover page
+            location.href = "./gameover.html"
+
+        }
+    }
+}
+
 class Player {
     constructor() {
         this.height = 20
@@ -16,7 +79,6 @@ class Player {
 
     createDomElement() {
         this.newPlayer = document.createElement("div");
-
 
         this.newPlayer.id = "player"
         this.newPlayer.style.width = this.width + "vw"
@@ -37,7 +99,7 @@ class Player {
                 clearInterval(this.upTime);
                 this.downTime = setInterval(() => {
                     if (this.positionY = + 10) {
-                        clearInterval(this.downTime); 
+                        clearInterval(this.downTime);
                         this.isJumping = false;
                     }
                     this.positionY = 10;
@@ -52,7 +114,6 @@ class Player {
     };
 };
 
-
 class Obstacle {
     constructor() {
         this.height = 10
@@ -60,7 +121,7 @@ class Obstacle {
         this.positionX = 100;
         this.positionY = 10;
         this.newObstacle = null
-
+        
         this.createDomElement();
 
     };
@@ -87,54 +148,17 @@ class Obstacle {
 
 };
 
+const game = new Game()
+game.start();
 
 
-const player = new Player();
-
-document.addEventListener("keydown", (event) => {
-    if (event.code === "Space") {
-        player.jump();
-    }
-
-});
 
 
-const obstaclesArr = [];
 
-setInterval(() => {
-    //this.rand = Math.round(Math.random() * (5000 - 2000)) + 2000;
-    const newObstacle = new Obstacle();
-    obstaclesArr.push(newObstacle);
-}, 2000);
 
-// move obstacles
-setInterval(() => {
 
-    obstaclesArr.forEach((obstacleInstance) => {
-        obstacleInstance.moveLeft();
 
-        // remove if outside
-        if (obstacleInstance.positionX < 0 - obstacleInstance.width) {
-            obstacleInstance.newObstacle.remove();
-            obstaclesArr.shift();
 
-        }
-
-        //Detects Collision  
-        if (
-            player.positionX < obstacleInstance.positionX + obstacleInstance.width &&
-            player.positionX + player.width > obstacleInstance.positionX &&
-            player.positionY < obstacleInstance.positionY + obstacleInstance.height &&
-            player.positionY + player.height > obstacleInstance.positionY
-        ) {
-
-            // Directs to gameover page
-            console.log("GAME OVER");
-            location.href = "./gameover.html"
-
-        }
-    });
-}, 100);
 
 
 

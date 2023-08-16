@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAME OVER</title>
 
     <link rel="stylesheet" href="./css/main.css">
-    
-</head>
-<body id="gameover">
-    <h1>GAME OVER</h1>
 
-    <a href="./index.html">Play again!</a>
+</head>
+
+<body>
+
+    <div class="container">
+        <img id="imgGameover" src="./css/Image/gameover_background.jpg" alt="running track">
+        <div id="scoreContainer">Your score is: <span id="finalScore"></span></div>
+        <div id="playAgain">
+            <a style="text-decoration: none" href="./game.html">PLAY AGAIN!</a>
+        </div>
+    </div>
+
+
+
+    <script src="gameover.js"></script>
+
 </body>
+
 </html>

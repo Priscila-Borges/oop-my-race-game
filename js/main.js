@@ -2,10 +2,12 @@ class Game {
     constructor() {
         this.player = new Player();
         this.obstaclesArr = []; // store instances of the class Obstacle
-        this.points = 0; //will be implemented later
-    }
+        this.score = 0;   
+
+    }   
 
     start() {
+
         // attach event listeners
         this.attachEventListeners();
 
@@ -24,6 +26,11 @@ class Game {
                 this.detectCollision(obstacleInstance); //Detects Collision               
             });     
         }, 15);
+
+        // display score
+        this.points();
+
+        document.getElementById("sound").play();
     }
 
     attachEventListeners() {
@@ -40,10 +47,12 @@ class Game {
         if (obstacleInstance.positionX < 0 - obstacleInstance.width) {
             obstacleInstance.newObstacle.remove();
             this.obstaclesArr.shift();
-            this.points++
+            this.score++
+            this.points();
         }
     }
 
+    
     detectCollision(obstacleInstance){
         
         if (
@@ -52,12 +61,22 @@ class Game {
             this.player.positionY < obstacleInstance.positionY + obstacleInstance.height &&
             this.player.positionY + this.player.height > obstacleInstance.positionY
         ) {
+           
+            localStorage.setItem('points', this.score);
 
             // Directs to gameover page
            location.href = "./gameover.html"
-
+             
+           
         }
     }
+
+    points(){
+        const pointCounter = document.getElementById("score");
+        pointCounter.textContent = "Score: " + this.score;
+
+    }    
+           
 }
 
 class Player {
@@ -94,7 +113,7 @@ class Player {
         if (this.isJumping) return;
 
         this.upTime = setInterval(() => {
-            if (this.positionY >= 230) {
+            if (this.positionY >= 210) {
                 clearInterval(this.upTime);
                 this.downTime = setInterval(() => {
                     if (this.positionY < 90) {
@@ -144,9 +163,9 @@ class Obstacle {
         this.positionX -= 7;
         this.newObstacle.style.left = this.positionX + "px"
 
-    };
-
+    };    
 };
+
 
 const game = new Game()
 game.start();

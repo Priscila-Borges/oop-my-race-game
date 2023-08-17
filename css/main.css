@@ -15,7 +15,7 @@ body {
     position: relative;
     text-align: center;
     overflow: hidden;
-    background-image: url("./Image/Marathon_Background.jpg");
+    background-image: url("../Image/Marathon_Background.jpg");
     animation: animate-background linear 1s infinite;
 }
 
@@ -31,7 +31,7 @@ body {
 
 #player {
     position: absolute;
-    background-image: url(./Image/Female_RunnerTwo.gif);
+    background-image: url(../Image/Female_RunnerTwo.gif);
     background-repeat: no-repeat;
     background-size: 200px 190px;
 }
